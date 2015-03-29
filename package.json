@@ -1,0 +1,36 @@
+{
+  "name": "nerf-turret",
+  "version": "0.0.3",
+  "description": "nerf turret api",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "repository": "rdepena/nerf-turret",
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "nerf-turret",
+    ""
+  ],
+  "dependencies": {
+    "node-hid": "^0.3.2",
+    "q": "^1.2.0",
+    "socket.io-client": "^1.3.5"
+  },
+  "devDependencies": {
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-cli": "^1.12.0",
+    "jshint-stylish": "^1.0.1",
+    "load-grunt-tasks": "^3.1.0",
+    "time-grunt": "^1.1.0"
+  },
+  "scripts": {
+    "test": "grunt"
+  }
+}
