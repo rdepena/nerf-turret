@@ -18,7 +18,17 @@ var nerfTurret = require('nerf-turret'),
     turret.left();
     setTimeout(turret.stop, 500);
     setTimeout(turret.fire, 500);
+    //possible commands are:
+    //turret.left();
+    //turret.right();
+    //turrent.up();
+    //turret.down();
+    //turret.stop();
+    //turret.fire();
+    
   });
+  
+  
 ```
 
 [Office Turret Bot video](https://vimeo.com/122693852)
