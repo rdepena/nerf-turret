@@ -21,6 +21,32 @@ var nerfTurret = require('nerf-turret'),
   });
 ```
 
+Pairing with a remote turret:
+You can use a socket.io server to pair with a remote turret, you will need a listener script connected to both the socket and the turrent and a remote script connected to the socket:
+Example Listener:
+```js
+var nerfTurret = require('nerf-turret'),
+  turret = new nerfTurret.Turret({
+    socketServer:'http://localhost:9000/',
+    listening: true
+  });
+
+  console.log('I am listening');
+```
+Example remote turret usage:
+```js
+var nerfTurret = require('nerf-turret'),
+  turret = new nerfTurret.Turret({
+    socketServer:'http://localhost:9000/'
+  });
+
+  turret.on('ready', function () {
+    turret.left();
+    setTimeout(turret.stop, 500);
+    setTimeout(turret.fire, 500);
+  });
+```
+
 [Office Turret Bot video](https://vimeo.com/122693852)
 
 
