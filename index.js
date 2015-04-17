@@ -1,5 +1,6 @@
 var Emitter = require('events').EventEmitter,
     util = require('util'),
+    io = require('socket.io-client'),
     DOWN = {
       val:0x01,
       name:'down'
@@ -29,9 +30,10 @@ var Emitter = require('events').EventEmitter,
 
 function Turret(options) {
   'use strict';
-  //Emitter.call(this);
   options = options || {};
-  var turretHid;
+  var isRemote = false,
+    turretHid,
+    socket;
 
   this.left = writeToTurret(LEFT).bind(this);
   this.right = writeToTurret(RIGHT).bind(this);
@@ -39,10 +41,33 @@ function Turret(options) {
   this.down = writeToTurret(DOWN).bind(this);
   this. stop = writeToTurret(STOP).bind(this);
   this.fire = writeToTurret(FIRE).bind(this);
+  var onReady = ready.bind(this),
+  onSocketMessage = processSocketMessage.bind(this);
 
+  if (options.socketServer){
+    socket = io(options.socketServer);
+    socket.on('connect', onReady);
+    if (options.listening) {
+      socket.on('nerf:turret:command', onSocketMessage);
+    } else {
+      isRemote = true;
+    }
+  }
+  function processSocketMessage(data) {
+      if(data.sourceId != socket.id) {
+        this[data.command.name]();
+      }
+  }
   function writeToTurret(command) {
     return function () {
       this.emit(command.name);
+      if(isRemote) {
+        socket.emit('nerf:turret:command', {
+          command: command,
+          sourceId: socket.id
+        });
+        return;
+      }
       turretHid.write([0x02, command.val, 0x00,0x00,0x00,0x00,0x00,0x00]);
     };
   }
@@ -53,6 +78,9 @@ function Turret(options) {
     this.emit('disconnecting');
   }
 
+  function ready() {
+    this.emit('ready');
+  }
   function hidConnection() {
     var HID = require('node-hid');
     turretHid = new HID.HID(vendorId, productId);
@@ -60,7 +88,9 @@ function Turret(options) {
   }
   //subscribe to the exit event:
   process.on('exit', disconnect.bind(this));
-  setTimeout(hidConnection.bind(this), 1);
+  if(!isRemote) {
+    setTimeout(hidConnection.bind(this), 1);
+  }
 }
 
 util.inherits(Turret, Emitter);
