@@ -1,6 +1,6 @@
 {
   "name": "nerf-turret",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "nerf turret api",
   "author": {
     "name": "",
@@ -31,5 +31,8 @@
   },
   "scripts": {
     "test": "grunt"
+  },
+  "browser": {
+    "node-hid": "./null.js"
   }
 }

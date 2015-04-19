@@ -54,7 +54,7 @@ function Turret(options) {
     }
   }
   function processSocketMessage(data) {
-      if(data.sourceId != socket.id) {
+      if(data.sourceId !== socket.id) {
         this[data.command.name]();
       }
   }
@@ -79,6 +79,7 @@ function Turret(options) {
   }
 
   function ready() {
+    console.log('I am ready');
     this.emit('ready');
   }
   function hidConnection() {
