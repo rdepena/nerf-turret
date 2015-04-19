@@ -1,6 +1,6 @@
 {
   "name": "nerf-turret",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "nerf turret api",
   "author": {
     "name": "",
@@ -9,7 +9,8 @@
   "repository": "rdepena/nerf-turret",
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "null.js"
   ],
   "keywords": [
     "nerf-turret",
